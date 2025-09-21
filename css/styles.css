@@ -1,0 +1,52 @@
+body {
+    background-color: rgb(255, 255, 255);
+    margin: 0;
+}
+
+.nav-bar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    width: 20%;
+    background-color: rgb(72, 72, 72);
+    height: 100vh;
+    text-align: center;
+    color: white;
+}
+
+#text-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 20%;
+    border: solid rgb(255, 255, 255) 1px;
+    background-color: white;
+    padding: 10%;
+}
+
+.nav-bar h2 {
+    margin: 5%;
+}
+
+.nav-bar p {
+    margin: 5%;
+}
+
+#portrait {
+    width: 80%;
+    border-radius: 50%;
+    height: auto;
+    margin: 10%;
+}
+
+.latest-posts {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 2 1 0;
+    border: solid;
+    text-align: center;
+}
