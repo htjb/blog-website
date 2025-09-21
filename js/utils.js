@@ -6,11 +6,7 @@ export function loadHTML(elementId, filePath) {
     });
 }
 
-export function loadMd(elementId, filePath) {
-  fetch(filePath)
-  .then(r => r.text())
-  .then(md => {
-    document.getElementById(elementId).innerHTML = marked.parse(md, {breaks: true});
-    renderMathInElement(document.getElementById(elementId)); // KaTeX
-  });
+export async function loadMd(elementId, filePath) {
+  let r = fetch(filePath).then(r => r.text())
+  return r
 }
