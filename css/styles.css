@@ -41,8 +41,30 @@ body {
     margin: 10%;
 }
 
-details {
-    border: solid rgb(255, 255, 255);
-    background-color: rgb(242, 243, 248);
-    margin: 2% 0 0 0;
+.card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: box-shadow 0.2s;
+  margin-top: 2%;
 }
+
+.card:hover { 
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15); 
+}
+
+.card-header {
+  padding: 1%;
+}
+
+.card-body {
+  max-height: 100px;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  padding: 0 1%;
+}
+.card.open .card-body {
+  max-height: 100%; /* large enough to fit content */
+}
+
