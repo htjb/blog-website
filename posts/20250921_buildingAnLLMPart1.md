@@ -50,7 +50,7 @@ for i, example in enumerate(pbar):
 
 The datasets can be found [here](https://huggingface.co/datasets/wikimedia/wikipedia). The first few lines of an example article are shown below.
 
-```
+```text
 April (Apr.) is the fourth month of the year in the Julian and Gregorian calendars, and comes between March and May. It is one of the four months to have 30 days.
 
 April always begins on the same day of the week as July, and additionally, January in leap years. April always ends on the same day of the week as December.
