@@ -1,6 +1,8 @@
 body {
     background-color: rgb(255, 255, 255);
     margin: 0;
+    font-size: large;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .nav-bar {
@@ -32,6 +34,11 @@ body {
 
 .nav-bar p {
     margin: 5%;
+}
+
+.link-image {
+    margin: 1%;
+    border-radius: 50%;
 }
 
 #portrait {

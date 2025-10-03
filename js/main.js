@@ -33,6 +33,10 @@ async function parsePost(elementId, postName){
       {left: '$',  right: '$',  display: false}
     ]
     }); // KaTeX
+    // find all the code blocks inside pre blocks inside the post and highlight them
+    document.querySelectorAll(`#${elementId} pre code`).forEach((block) => {
+        hljs.highlightElement(block);
+    });
 }
 
 let textContents = document.getElementById("text-content")
