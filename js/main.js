@@ -6,6 +6,7 @@ async function parsePost(elementId, postName){
     outputDiv.setAttribute("class", "card");
     textContents.appendChild(outputDiv);
     let post = await loadMd(elementId, postName)
+    // first 4 lines are metadata
     let metaInfoText = post.split('\n').slice(0, 4)
     let metaInfo = {}
     for (let meta of metaInfoText){
@@ -14,6 +15,7 @@ async function parsePost(elementId, postName){
         }
     }
 
+    // everything after the first 5 lines is the post content
     let postHTML = marked.parse(
         post.split('\n').slice(5, post.length).join('\n'), 
         {breaks: true})
@@ -39,22 +41,36 @@ async function parsePost(elementId, postName){
     });
 }
 
+// tag for text content
 let textContents = document.getElementById("text-content")
-console.log(textContents)
+// load in the welcome message
 let welcomeDiv = document.createElement("div");
 welcomeDiv.setAttribute("id", "welcome-div")
 textContents.appendChild(welcomeDiv)
-
 let welcome = await loadMd('welcome-div', 'includes/welcome.md')    
 let welcomeHTML = marked.parse(welcome, {breaks: true})
 document.getElementById('welcome-div').innerHTML = welcomeHTML
 renderMathInElement(document.getElementById("welcome-div")); // KaTeX
 
-fetch('posts/post-list.txt')
+fetch('posts/tag-list.txt')
+    .then(response => response.text())
+    .then(data => {
+        let tagList = data.split('\n').filter(line => line.length > 0);
+        console.log(tagList);
+        let tagHolder = document.createElement('div');
+        textContents.appendChild(tagHolder);
+        for (let tag of tagList){
+            let tagButton = document.createElement('button')
+            tagButton.innerHTML = tag;
+            tagButton.setAttribute('class', 'tag-button')
+            tagHolder.appendChild(tagButton)
+        }
+        // now load posts *after* tags
+    return fetch('posts/post-list.txt');
+    })
     .then(response => response.text())
     .then(data => {
         let postList = data.split('\n').filter(line => line.length > 0);
-        console.log(postList);
         for (let i = postList.length - 1; i >= 0; i--){
             let postId = 'post' + (i + 1);
             parsePost(postId, postList[i]);
