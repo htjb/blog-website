@@ -1,2 +1,3 @@
 posts/20250920_21cmforegrounds.md
 posts/20250921_buildingAnLLMPart1.md
+posts/20251007_globalworkshop.md
