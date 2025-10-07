@@ -1,0 +1,50 @@
+@media (max-width: 768px) {
+  .nav-bar {
+    position: relative;
+    width: 100%;
+    height: auto;
+    flex-direction: row;              /* image left, text right */
+    justify-content: flex-start;
+    align-items: center;
+    padding: 1rem;
+    gap: 1.5rem;
+    text-align: left;
+  }
+
+  #portrait {
+    width: 30%;
+    max-width: 120px;
+    margin: 0;
+  }
+
+  /* Wrap text + icons in a vertical column */
+  .nav-bar-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    flex: 1; /* take up remaining space */
+  }
+
+  .nav-bar h2,
+  .nav-bar p {
+    margin: 0.5rem 0;
+  }
+
+  .nav-bar center { /* the icons container */
+    display: flex; /* use flexbox for layout */
+    flex-wrap: wrap; /* if the icons overflow, wrap to next line */
+    gap: 0.5rem; /* space between icons */
+    justify-content: flex-start; /* align icons to the left */
+  }
+
+  .link-image {
+    width: 28px;
+    height: 28px;
+  }
+
+  #text-content {
+    margin-left: 0;
+    padding: 5%;
+  }
+}
