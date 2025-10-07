@@ -27,7 +27,11 @@ async function parsePost(elementId, postName){
         //metaInfo['tags'].split(',').map(tag => '<a href="" class="' + tag + '">' + tag.trim() + 
         //'</a>').join(',') +
         '</div>'
-    postHTML = title + '<div class="card-body">\n' + postHTMLList.join('\n') + '\n</div>'
+    postHTML = title + '<div class="card-body">\n' + postHTMLList.join('\n') + 
+        //'<p align="center"> Tags:' +
+        //metaInfo['tags'].split(',').map(tag => ' ' + tag.trim() + ' ').join('')
+        //+ '</p>'
+        '\n</div>'
     document.getElementById(elementId).innerHTML = postHTML
     renderMathInElement(document.getElementById(elementId), {
         delimiters: [
@@ -77,5 +81,39 @@ fetch('posts/tag-list.txt')
         }
         document.querySelectorAll('.card').forEach(card => {
         card.addEventListener('click', () => card.classList.toggle('open'));
+
+        /*const links = document.querySelectorAll('a[href]');
+  
+        links.forEach(link => {
+            const url = new URL(link.href, window.location.href);
+            // Check if the link is external
+            if (url.origin !== window.location.origin) {
+            link.setAttribute('target', '_blank');
+            link.setAttribute('rel', 'noopener noreferrer');
+            }
+        });*/
+
         });
     });
+
+/*document.addEventListener('click', (e) => {
+  if (e.target.matches('.tag-button')) {
+    console.log('e.innerText', e.target.innerText);
+  }
+  let cards = document.querySelectorAll('.card');
+  // want to show all cards if no tag selected otherwise filter
+  if (e.target.matches('.tag-button')){
+    let selectedTag = e.target.innerText;
+    cards.forEach(card => {
+        if (card.innerHTML.includes(selectedTag)){
+            card.style.display = 'block';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+  } else {
+    cards.forEach(card => {
+        card.style.display = 'block';
+    });
+  }
+});*/
