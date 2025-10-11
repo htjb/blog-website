@@ -1,61 +1,54 @@
 import { parsePost, loadWelcome, cleanHtml } from "./utils.js";
 
-loadWelcome()
+const textContents = document.getElementById("text-content");
 
-let textContents = document.getElementById("text-content")
+// Delegation listener (recommended)
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest('.tag-button');
+  if (!btn) return;
+    reload(btn.textContent.trim());
+});
 
-// initial load of tags and posts
-fetch('posts/tag-list.txt')
-    .then(response => response.text())
-    .then(data => {
-        let tagList = data.split('\n').filter(line => line.length > 0);
-        console.log(tagList);
-        let tagHolder = document.createElement('div');
-        textContents.appendChild(tagHolder);
-        for (let tag of tagList){
-            let tagButton = document.createElement('button')
-            tagButton.innerHTML = tag;
-            tagButton.setAttribute('class', 'tag-button')
-            tagHolder.appendChild(tagButton)
-        }
-        // now load posts *after* tags
-    return fetch('posts/post-list.txt');
-    })
-    .then(response => response.text())
-    .then(data => {
-        let postList = data.split('\n').filter(line => line.length > 0);
-        for (let i = postList.length - 1; i >= 0; i--){
-            let postId = 'post' + (i + 1);
-            parsePost(postId, postList[i]);
-        }
-    });
+async function loadTags() {
+  const data = await fetch('posts/tag-list.txt').then(r => r.text());
+  const tagList = data.split('\n').filter(Boolean);
+  console.log(tagList);
+  
+  const tagHolder = document.createElement('div');
+  tagHolder.id = 'tag-holder';
 
-// event listener for tag buttons to filter posts
-// document.querySelectorAll('.tag-button').forEach(button => {
-//     button.addEventListener('click', () => {
-//         console.log('Filtering for tag: ' + button.innerHTML)
-//     cleanHtml("text-content")
-//     loadWelcome()
-//     fetch('posts/tag-list.txt')
-//         .then(response => response.text())
-//         .then(data => {
-//             let tagList = data.split('\n').filter(line => line.length > 0);
-//             console.log(tagList);
-//             let tagHolder = document.createElement('div');
-//             textContents.appendChild(tagHolder);
-//             for (let tag of tagList){
-//                 let tagButton = document.createElement('button')
-//                 tagButton.innerHTML = tag;
-//                 tagButton.setAttribute('class', 'tag-button')
-//                 tagHolder.appendChild(tagButton)
-//             } return fetch('posts/post-list.txt') })
-//         .then(response => response.text())
-//         .then(data => {
-//             let postList = data.split('\n').filter(line => line.length > 0);
-//             for (let i = postList.length - 1; i >= 0; i--){
-//                 let postId = 'post' + (i + 1);
-//                 parsePost(postId, postList[i], button.innerHTML);
-//             }
-//         });
-//     });
-// });
+  const allButton = document.createElement('button');
+  allButton.className = 'tag-button';
+  allButton.textContent = 'All Posts';
+  tagHolder.appendChild(allButton);
+  
+  for (const tag of tagList) {
+    const b = document.createElement('button');
+    b.className = 'tag-button';
+    b.textContent = tag;
+    tagHolder.appendChild(b);
+  }
+
+  textContents.appendChild(tagHolder);
+}
+
+async function loadPosts(filterTag = null) {
+  const data = await fetch('posts/post-list.txt').then(r => r.text());
+  const postList = data.split('\n').filter(Boolean);
+  for (let i = postList.length - 1; i >= 0; i--) {
+    const postId = 'post' + (i + 1);
+    parsePost(postId, postList[i], filterTag); // don't need to await unless you want sequential load
+  }
+}
+
+async function reload(filterTag = null) {
+  cleanHtml("text-content");
+  if (filterTag == null) {
+    loadWelcome();
+    await loadTags();
+  }
+  await loadPosts(filterTag);
+}
+
+// initial load
+reload();

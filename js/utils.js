@@ -4,7 +4,8 @@ export async function loadMd(elementId, filePath) {
 }
 
 export async function cleanHtml(id) {
-  document.getElementById(id).innerHTML = "";
+  //document.getElementById(id).innerHTML = "";
+  document.querySelectorAll('.card').forEach(el => el.remove());
 }
 
 export async function parsePost(elementId, postName, tag=null){
@@ -24,7 +25,7 @@ export async function parsePost(elementId, postName, tag=null){
             metaInfo[meta.split(':')[0]] = meta.split(':')[1]
         }
     }
-    if (tag == null || metaInfo['tags'].includes(tag)){
+    if (tag == null || metaInfo['tags'].includes(tag) || tag == 'All Posts'){
       textContents.appendChild(outputDiv);
       // everything after the first 5 lines is the post content
       let postHTML = marked.parse(
