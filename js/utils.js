@@ -12,7 +12,9 @@ export async function parsePost(elementId, postName, tag=null){
     let outputDiv = document.createElement("div");
     outputDiv.setAttribute("id", elementId);
     outputDiv.setAttribute("class", "card");
-    textContents.appendChild(outputDiv);
+    outputDiv.addEventListener('click', () => {
+      outputDiv.classList.toggle('open');
+    });
     let post = await loadMd(elementId, postName)
     // first 4 lines are metadata
     let metaInfoText = post.split('\n').slice(0, 4)
@@ -22,35 +24,37 @@ export async function parsePost(elementId, postName, tag=null){
             metaInfo[meta.split(':')[0]] = meta.split(':')[1]
         }
     }
+    if (tag == null || metaInfo['tags'].includes(tag)){
+      textContents.appendChild(outputDiv);
+      // everything after the first 5 lines is the post content
+      let postHTML = marked.parse(
+          post.split('\n').slice(5, post.length).join('\n'), 
+          {breaks: true})
 
-    // everything after the first 5 lines is the post content
-    let postHTML = marked.parse(
-        post.split('\n').slice(5, post.length).join('\n'), 
-        {breaks: true})
-
-    let postHTMLList = postHTML.split('\n')
-    let title = postHTMLList.shift()
-    title = '<h1>' + metaInfo['date'] + ' - ' +  title.slice(4, title.length)
-    title = '<div class="card-header">' + title + '\n' + 
-        //metaInfo['tags'].split(',').map(tag => '<a href="" class="' + tag + '">' + tag.trim() + 
-        //'</a>').join(',') +
-        '</div>'
-    postHTML = title + '<div class="card-body">\n' + postHTMLList.join('\n') + 
-        //'<p align="center"> Tags:' +
-        //metaInfo['tags'].split(',').map(tag => ' ' + tag.trim() + ' ').join('')
-        //+ '</p>'
-        '\n</div>'
-    document.getElementById(elementId).innerHTML = postHTML
-    renderMathInElement(document.getElementById(elementId), {
-        delimiters: [
-      {left: '$$', right: '$$', display: true},
-      {left: '$',  right: '$',  display: false}
-    ]
-    }); // KaTeX
-    // find all the code blocks inside pre blocks inside the post and highlight them
-    document.querySelectorAll(`#${elementId} pre code`).forEach((block) => {
-        hljs.highlightElement(block);
-    });
+      let postHTMLList = postHTML.split('\n')
+      let title = postHTMLList.shift()
+      title = '<h1>' + metaInfo['date'] + ' - ' +  title.slice(4, title.length)
+      title = '<div class="card-header">' + title + '\n' + 
+          //metaInfo['tags'].split(',').map(tag => '<a href="" class="' + tag + '">' + tag.trim() + 
+          //'</a>').join(',') +
+          '</div>'
+      postHTML = title + '<div class="card-body">\n' + postHTMLList.join('\n') + 
+          //'<p align="center"> Tags:' +
+          //metaInfo['tags'].split(',').map(tag => ' ' + tag.trim() + ' ').join('')
+          //+ '</p>'
+          '\n</div>'
+      document.getElementById(elementId).innerHTML = postHTML
+      renderMathInElement(document.getElementById(elementId), {
+          delimiters: [
+        {left: '$$', right: '$$', display: true},
+        {left: '$',  right: '$',  display: false}
+      ]
+      }); // KaTeX
+      // find all the code blocks inside pre blocks inside the post and highlight them
+      document.querySelectorAll(`#${elementId} pre code`).forEach((block) => {
+          hljs.highlightElement(block);
+      });
+  }
 }
 
 export async function loadWelcome(){

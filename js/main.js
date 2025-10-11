@@ -4,6 +4,7 @@ loadWelcome()
 
 let textContents = document.getElementById("text-content")
 
+// initial load of tags and posts
 fetch('posts/tag-list.txt')
     .then(response => response.text())
     .then(data => {
@@ -27,36 +28,34 @@ fetch('posts/tag-list.txt')
             let postId = 'post' + (i + 1);
             parsePost(postId, postList[i]);
         }
-        document.querySelectorAll('.card').forEach(card => {
-        card.addEventListener('click', () => card.classList.toggle('open'));
-
-        /*const links = document.querySelectorAll('a[href]');
-  
-        links.forEach(link => {
-            const url = new URL(link.href, window.location.href);
-            // Check if the link is external
-            if (url.origin !== window.location.origin) {
-            link.setAttribute('target', '_blank');
-            link.setAttribute('rel', 'noopener noreferrer');
-            }
-        });*/
-
-        });
     });
 
-// document.addEventListener('click', (e) => {
-//   cleanHtml(textContents)
-//   loadWelcome()
-//   fetch('posts/post-list.txt')
-//     .then(response => response.text())
-//     .then(data => {
-//         let postList = data.split('\n').filter(line => line.length > 0);
-//         for (let i = postList.length - 1; i >= 0; i--){
-//             let postId = 'post' + (i + 1);
-//             parsePost(postId, postList[i]);
-//         }
-//         document.querySelectorAll('.card').forEach(card => {
-//         card.addEventListener('click', () => card.classList.toggle('open'));
+// event listener for tag buttons to filter posts
+// document.querySelectorAll('.tag-button').forEach(button => {
+//     button.addEventListener('click', () => {
+//         console.log('Filtering for tag: ' + button.innerHTML)
+//     cleanHtml("text-content")
+//     loadWelcome()
+//     fetch('posts/tag-list.txt')
+//         .then(response => response.text())
+//         .then(data => {
+//             let tagList = data.split('\n').filter(line => line.length > 0);
+//             console.log(tagList);
+//             let tagHolder = document.createElement('div');
+//             textContents.appendChild(tagHolder);
+//             for (let tag of tagList){
+//                 let tagButton = document.createElement('button')
+//                 tagButton.innerHTML = tag;
+//                 tagButton.setAttribute('class', 'tag-button')
+//                 tagHolder.appendChild(tagButton)
+//             } return fetch('posts/post-list.txt') })
+//         .then(response => response.text())
+//         .then(data => {
+//             let postList = data.split('\n').filter(line => line.length > 0);
+//             for (let i = postList.length - 1; i >= 0; i--){
+//                 let postId = 'post' + (i + 1);
+//                 parsePost(postId, postList[i], button.innerHTML);
+//             }
 //         });
 //     });
 // });
