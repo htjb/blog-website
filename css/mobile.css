@@ -1,4 +1,8 @@
 @media (max-width: 768px) {
+  body {
+    font-size: 14px;
+  }
+
   .nav-bar {
     position: relative;
     width: 100%;
@@ -26,6 +30,12 @@
     flex: 1; /* take up remaining space */
   }
 
+  .nav-buttons {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
   .nav-bar h2,
   .nav-bar p {
     margin: 0.5rem 0;
@@ -36,6 +46,10 @@
     flex-wrap: wrap; /* if the icons overflow, wrap to next line */
     gap: 0.5rem; /* space between icons */
     justify-content: flex-start; /* align icons to the left */
+  }
+
+  .internal-link {
+    font-size: 12px;
   }
 
   .link-image {

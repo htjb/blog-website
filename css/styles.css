@@ -23,6 +23,12 @@ body {
     margin: 5%;
 }
 
+.nav-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
 #text-content {
     display: flex;
     flex-direction: column;
@@ -70,8 +76,18 @@ body {
   max-height: 100%; /* large enough to fit content */
 }
 
-.tag-button {
+button {
   margin:1%;
   border: solid rgb(197, 71, 71);
   border-radius: 25px;
+}
+
+.internal-link {
+  background-color: white;
+  color: black;
+  padding: 5px 10px;
+  text-align: center;
+  font-size: 14px;
+  cursor: pointer;
+  min-width: 30%;
 }
