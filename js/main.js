@@ -36,8 +36,7 @@ async function loadPosts(filterTag = null) {
   const data = await fetch('posts/post-list.txt').then(r => r.text());
   const postList = data.split('\n').filter(Boolean);
   for (let i = postList.length - 1; i >= 0; i--) {
-    const postId = 'post' + (i + 1);
-    parsePost(postId, postList[i], filterTag); // don't need to await unless you want sequential load
+    parsePost(postList[i], filterTag); // don't need to await unless you want sequential load
   }
 }
 
@@ -52,3 +51,25 @@ async function reload(filterTag = null) {
 
 // initial load
 reload();
+
+window.addEventListener('DOMContentLoaded', () => {
+  const hash = window.location.hash;
+  if (!hash) return;
+
+  const openCard = () => {
+    const card = document.querySelector(hash);
+    if (card) {
+      card.setAttribute('class', 'card open');
+      card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      return true;
+    }
+    return false;
+  };
+
+  if (!openCard()) {
+    const observer = new MutationObserver(() => {
+      if (openCard()) observer.disconnect();
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+  }
+});

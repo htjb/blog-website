@@ -1,4 +1,4 @@
-export async function loadMd(elementId, filePath) {
+export async function loadMd(filePath) {
   let r = fetch(filePath).then(r => r.text())
   return r
 }
@@ -8,15 +8,14 @@ export async function cleanHtml(id) {
   document.querySelectorAll('.card').forEach(el => el.remove());
 }
 
-export async function parsePost(elementId, postName, tag=null){
+export async function parsePost(postName, tag=null){
     let textContents = document.getElementById("text-content")
     let outputDiv = document.createElement("div");
-    outputDiv.setAttribute("id", elementId);
     outputDiv.setAttribute("class", "card");
     outputDiv.addEventListener('click', () => {
       outputDiv.classList.toggle('open');
     });
-    let post = await loadMd(elementId, postName)
+    let post = await loadMd(postName)
     // first 4 lines are metadata
     let metaInfoText = post.split('\n').slice(0, 4)
     let metaInfo = {}
@@ -34,15 +33,17 @@ export async function parsePost(elementId, postName, tag=null){
 
       let postHTMLList = postHTML.split('\n')
       let title = postHTMLList.shift()
-      title = '<h1>' + metaInfo['date'] + ' - ' +  title.slice(4, title.length)
-      title = '<div class="card-header">' + title + '\n' + 
-          //metaInfo['tags'].split(',').map(tag => '<a href="" class="' + tag + '">' + tag.trim() + 
-          //'</a>').join(',') +
-          '</div>'
-      postHTML = title + '<div class="card-body">\n' + postHTMLList.join('\n') + 
-          //'<p align="center"> Tags:' +
-          //metaInfo['tags'].split(',').map(tag => ' ' + tag.trim() + ' ').join('')
-          //+ '</p>'
+      let elementId = 'post-' + 
+        title.split('<h1>')[1].split('</h1>')[0]
+        .toLowerCase().replace(/[^a-z0-9]+/g, '-')
+      outputDiv.setAttribute("id", elementId);
+
+      title = '<h1>' + title.slice(4, title.length)
+      title = '<div class="card-header">' + title + '\n</div>'
+      console.log(metaInfo['date'])
+      postHTML = title + '<div class="card-body">\n'
+          + `<p>${metaInfo['date']}</p>`
+          + postHTMLList.join('\n') + 
           '\n</div>'
       document.getElementById(elementId).innerHTML = postHTML
       renderMathInElement(document.getElementById(elementId), {
@@ -65,7 +66,7 @@ export async function loadWelcome(){
   let welcomeDiv = document.createElement("div");
   welcomeDiv.setAttribute("id", "welcome-div")
   textContents.appendChild(welcomeDiv)
-  let welcome = await loadMd('welcome-div', 'includes/welcome.md')    
+  let welcome = await loadMd('includes/welcome.md')    
   let welcomeHTML = marked.parse(welcome, {breaks: true})
   document.getElementById('welcome-div').innerHTML = welcomeHTML
   renderMathInElement(document.getElementById("welcome-div")); // KaTeX
