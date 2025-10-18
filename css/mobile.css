@@ -64,4 +64,8 @@
     margin-left: 0;
     padding: 5%;
   }
+
+  .katex-html {
+    font-size: 0.8em;
+  }
 }

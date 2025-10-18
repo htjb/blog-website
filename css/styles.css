@@ -91,3 +91,7 @@ button {
   cursor: pointer;
   min-width: 50%;
 }
+
+.katex-display { 
+  overflow: auto hidden;
+}
