@@ -56,9 +56,7 @@ async function loadPosts(filterTag = null) {
   // load posts from post-list.txt
   const data = await fetch('posts/post-list.txt').then(r => r.text());
   const postList = data.split('\n').filter(Boolean);
-  for (let i = postList.length - 1; i >= 0; i--) {
-    parsePost(postList[i], filterTag); // don't need to await unless you want sequential load
-  }
+  parsePost(postList, filterTag);
 }
 
 async function reload(filterTag = null) {
