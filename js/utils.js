@@ -3,7 +3,7 @@ export async function loadMd(filePath) {
   return r
 }
 
-export async function cleanHtml(id) {
+export async function cleanPosts(id) {
   //document.getElementById(id).innerHTML = "";
   document.querySelectorAll('.card').forEach(el => el.remove());
 }
@@ -79,11 +79,13 @@ export async function loadWelcome(){
   // tag for text content
   let textContents = document.getElementById("text-content")
   // load in the welcome message
-  let welcomeDiv = document.createElement("div");
-  welcomeDiv.setAttribute("id", "welcome-div")
-  textContents.appendChild(welcomeDiv)
+  if (!document.getElementById("welcome-div")){
+    let welcomeDiv = document.createElement("div");
+    welcomeDiv.setAttribute("id", "welcome-div")
+    textContents.appendChild(welcomeDiv)
+  }
+
   let welcome = await loadMd('includes/welcome.md')    
   let welcomeHTML = marked.parse(welcome, {breaks: true})
   document.getElementById('welcome-div').innerHTML = welcomeHTML
-  renderMathInElement(document.getElementById("welcome-div")); // KaTeX
 }
