@@ -34,12 +34,24 @@ You can see my slides from the conference [here](https://github.com/htjb/Talks/b
 
 ## Discussion
 
+As part of the workshop I ran a discussion session on data analysis and applicaitons of machine learning in the field. 
+
+I discussed the relationship between the all sky measurements we are making and existing models of the radio sky like GSM. This was motivated by an earlier talk in the day from the GINAN collaboration who have found that their data disagrees with the predicted magnitude of the radio monopole from GMS by about 20%. This is consistent with results from other experiments and there are known issues with the maps that make up GSM but in practice the true value of the monopole may be somewhere between the measurements from global signal experiments and the maps that make up GSM.
+
+I also asked about whether we were confident that our theoretical models are correct or do we think that we are still missing some important effects. We often do not account for uncertainties in our modelling when we perform our analysis and there are many theoretical models that are all parameterised slightly differently. There have been suggestions in the past that a code comparison could be performed to get a better handle on the differences and this could help inform theoretical uncertainties.
+
+Finally, I talked about AI and the advent of GPU computing. I asked about the possibilities of using agentic ai for 21-cm cosmology and we discussed a number of potential applications including antenna design and signal emulator design. I also asked if people were using LLMs in their day to day research and how we felt about the potential impact it will have on students going forward.
+
 <center><img src="./posts/images/global_workshop.png" alt-text="Leading the discussion  session" width="50%"></center>
 
 ## Highlighted Talks
 
+There were many exciting talks at the conference and the field has made a lot of progress in recent years particularly in diversifying the landscape of instruments that are being used and in developing analysis tools. I've highlighted two exciting contributions below.
+
 ### BayesLIM - Nick Kern
 
-### 21-cm Cosmology from the ground and space - Eloy de Lera Acedo
+Nick Kern introduced his [BayesLIM](https://github.com/BayesLIM/BayesLIM) package to the field. This is a full end-to-end simulation framework for line intensity mapping and 21-cm cosmology. The thing that excites me about this project is that it is written in PyTorch, can therefore be run on GPUs and you can take gradients across the model allowing for efficient inference with frameworks like BlackJAX and GPU compatible implementations of algorithms like HMC. The code isn't yet set up for sky-averaged 21-cm cosmology and there is no integrated GPU model of the 21-cm signal but I am excited to see where it goes!
 
-### EIGSEP progress
+### EIGSEP progress - Aaron Parsons, Christian Hellum Bye, Bahram Khalichi, Dominic Vazquez, Charlie Tolley
+
+The EIGSEP team gave several updates on their progress. EIGESP is a proposal to hang an antenna in a canyon in order to get away from the soil which causes issues for sky-averaged instruments operating at low frequencies between 50-200 MHz. The team discussed recent deployments where their new bow tie antenna (previously the collaboration had been using a Vivaldi feed) had been suspended in a canyon 100 m above the ground. The idea is that the antenna is sufficiently high that the canyon floor and walls are in the far field and do not impact the response of the antenna to the sky (known as the beam pattern). Of course the horizon is very close however and the field of view is narrowed. The team explained how they could rotate their antenna around when it was suspended and make measurements of its beam pattern in situ helping them better understand the response of the telescope.
