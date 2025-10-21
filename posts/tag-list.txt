@@ -1,6 +1,7 @@
 21cm
 conferences
 foregrounds
+javascript
 llms
 machine learning
 simulations
