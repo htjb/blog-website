@@ -36,11 +36,73 @@ to the `<head></head>` in my `index.html`. These packages are loaded up when the
 
 ## File structure
 
-talk about structuring posts file names and metadata to make parsing easier later...
+I also needed to think about the file structure. A website is built from several different types of files including css, html, js and in my case markdown files. I also images for both my posts and some of the more permanent pages on my site. I can run the `tree . -a -I '.git|.DS_Store' > output.txt' to generate a file tree that shows the layout of my website.
+
+```
+website
+├── .gitignore
+├── assets
+│   ├── 21cmsignal.png
+│   ├── ads.png
+│   ├── arxiv.png
+│   ├── github_logo.png
+│   ├── linkedin.png
+│   ├── portrait.jpeg
+│   ├── reach-and-cosmocube.png
+│   └── rocket.png
+├── css
+│   ├── mobile.css
+│   └── styles.css
+├── includes
+│   ├── about.md
+│   ├── code.md
+│   ├── research.md
+│   └── welcome.md
+├── index.html
+├── js
+│   ├── main.js
+│   └── utils.js
+└── posts
+    ├── 20250920_21cmforegrounds.md
+    ├── 20250921_buildingAnLLMPart1.md
+    ├── 20251007_globalworkshop.md
+    ├── 20251021_makingThisWebsite.md
+    ├── build-post-list.py
+    ├── images
+    │   ├── beam_sky_pattern.png
+    │   ├── global_workshop.png
+    │   ├── makingThisWebsite
+    │   │   └── old-website.png
+    │   └── sky_brightness_vs_frequency.png
+    ├── post-list.txt
+    └── tag-list.txt
+```
+
+I have a `.gitignore` to prevent accidentally uploading certain files. The `assets` folder contains images that are used in the pages in `includes` that explain my research and the codes that I have worked on. I also have my portrait in `assets` and some logos that I use to link to my arXiv, github, linkedin and ads abstracts. 
+
+`css` includes my style files. I started off with just `styles.css` but eventually realised I needed some specific rules for styling the website on smaller screens like mobiles and tablets. These rules are kept in `mobile.css` and both are linked in `index.html` which is the only html page on the site.
+
+`js/` is where I keep the javascript functions needed to dynamically load content into the website from the `.md` files and handle interactions with different features on the website. I started off with good intentions having a `utils.js` and `main.js` file, but I will admit they have become a bit untidy. Fortunately there are only around 200 lines of code in total, and I will (eventually) tidy it up a bit!
+
+Finally, `posts` is where I keep my blog posts. Each post is given a file name that includes the date and a description of the contents. `build-post-list.py` is a short python script that creates a list of the posts in the file and a list of tags. Every time a post gets added to the website this script can be run to update these files. The files are later used to load in the content to the website and create buttons that allow users to filter the posts based on tags. I could probably have done this in JavaScript, but I was feeling lazy clearly. `posts/images` contains pictures for each of the posts. The posts have some metadata at the top like this
+
+```
+---
+type: post
+date: 21/10/2025
+tags: javascript
+---
+```
+that is used for filtering and ordering on the website.
 
 ## Website Layout
 
 can talk about the index.html body layout... and the relevant styling...
+
+<div style="display: flex; flex-direction: row; align-items: flex-start; justify-content:flex-start;">
+<p style="width: 50%; margin-right: 1em;">A sketch of the layout is shown on the right</p>
+<img src="posts/images/makingThisWebsite/Website.png" width="50%" alt="A sketch of the webiste layout">
+</div>
 
 ```html
 <body>
@@ -80,6 +142,11 @@ little bit of python to help...
 ## Filtering based on tags
 
 ## Styling for mobile
+
+<div style="display: flex; flex-direction: row; align-items: flex-start; justify-content:flex-start;">
+<p style="width: 70%; margin-right: 1em;">A sketch of the mobile layout is shown on the right</p>
+<img src="posts/images/makingThisWebsite/Mobile_website.png" width="30%" alt="A sketch of the mobile layout.">
+</div>
 
 ## Hosting with Netlify
 
