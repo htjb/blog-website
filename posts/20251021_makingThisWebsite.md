@@ -97,7 +97,7 @@ that is used for filtering and ordering on the website.
 
 ## Website Layout
 
-can talk about the index.html body layout... and the relevant styling...
+I wanted to keep the layout of the website quite minimalist with an always there navigation bar and a region for displaying content like in the diagram below. I also didn't want the webiste to be one continuous long steam of text and I wanted visitors to be able to quickly scan through my latest posts. 
 
 <div style="display: flex; flex-direction: row; align-items: flex-start; justify-content:flex-start;">
 <p style="width: 50%; margin-right: 1em;">A sketch of the layout is shown on the right</p>
