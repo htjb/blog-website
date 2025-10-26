@@ -262,7 +262,7 @@ The final change was to make the navigation bar's position relative so that it m
 
 ## Hosting with Netlify
 
-The website is being hosted on Netlify. It's not something I have used before, but it was super easy to set up, and you can host your website for free. You can sign up with your GitHub account and link a repository. Every time the deployed branch is updated the website is automatically redeployed, and I think you can also deploy multiple branches meaning I could in theory deploy my dev branch!
+The website is being hosted on Netlify. It's not something I have used before, but it was super easy to set up, and you can host your website for free (ish). You can sign up with your GitHub account and link a repository. Every time the deployed branch is updated the website is automatically redeployed, and I think you can also deploy multiple branches meaning I could in theory deploy my dev branch!
 
 My domain was purchased through Google domains originally, but this sold to Squarespace. I used this domain for my old GitHub pages and never had any issues with Squarespace.
 
@@ -272,7 +272,7 @@ I want to keep playing with Netlify and see what it has to offer, but it seems q
 
 One thing I would really like to add to the website is a way for people to subscribe and get updates every time a new post is added. Something like RSS might work here, but I need to explore options really!
 
-I'm also keen to explore frameworks like Reach.js and see if they can help improve the design and user experience.
+I'm also keen to explore frameworks like React and see if they can help improve the design and user experience.
 
 It would be fun to add a feature where users can change the highlight colour as well. I think this can be done with CSS variables, but I need to play with it a bit.
 
