@@ -64,7 +64,7 @@ export async function parsePost(postList, tag=null){
         const shareBtn = document.getElementById('shareBtn-' + elementId);
 
         shareBtn.addEventListener('click', async e => {
-          e.stopPropagation();
+          e.stopPropagation(); // prevent the card from toggling
           if (navigator.share) {
             await navigator.share({
               title: document.title,
