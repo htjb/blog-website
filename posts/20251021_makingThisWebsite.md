@@ -10,7 +10,7 @@ I’ve had a website on GitHub Pages for a few years using Jekyll, but I’ve ne
 
 <center><img src="posts/images/makingThisWebsite/old-website.png" width="80%" alt="A screenshot of my old website"></center>
 
-It's quite common in academia to have a website that acts as a sort of stylized CV and a platform to advertise your work and advertise the work of your research group. This was the style that I went for with my old website. I wanted to showcase my publications, talks and teaching experience. I still want to showcase my research with my new site, but I don't want it to look like a carbon copy of my CV. Instead, I essentially want my website to be a blog with posts about my latest work and any fun coding projects I am doing in my free time like [this post on building an llm](). You can read about the different steps in creating the website below!
+It's quite common in academia to have a website that acts as a sort of stylized CV and a platform to advertise your work and advertise the work of your research group. This was the style that I went for with my old website. I wanted to showcase my publications, talks and teaching experience. I still want to showcase my research with my new site, but I don't want it to look like a carbon copy of my CV. Instead, I essentially want my website to be a blog with posts about my latest work and any fun coding projects I am doing in my free time like [this post on building an llm](https://harrybevins.co.uk/#post-building-a-large-language-model-part-1). You can read about the different steps in creating the website below!
 
 ## Markdown, JS and HTML
 
