@@ -100,9 +100,12 @@ that is used for filtering and ordering on the website.
 I wanted to keep the layout of the website quite minimalist with an always there navigation bar and a region for displaying content like in the diagram below. I also didn't want the webiste to be one continuous long steam of text and I wanted visitors to be able to quickly scan through my latest posts. 
 
 <div style="display: flex; flex-direction: row; align-items: flex-start; justify-content:flex-start;">
-<p style="width: 50%; margin-right: 1em;">A sketch of the layout is shown on the right</p>
+<p style="width: 50%; margin-right: 1em;">A sketch of the layout is shown on the right. The idea was that the always there navigation bar would include a nice picture of me, my name a description of my job, a couple of logos that link to sites like github and arXiv, and a few buttons for the users to move between the home page with the blog posts and the static pages explaining my research.</p>
 <img src="posts/images/makingThisWebsite/Website.png" width="50%" alt="A sketch of the webiste layout">
 </div>
+I wanted the blog posts to appear on preview cards that the user can click on to expand and read. I also wanted the anyone visiting the cite to be able to filter the posts based on tags and be able to share the posts.
+
+The body of the `index.html` page is shown below. You can see the `nav-bar` which is styled as a flex box with the flex direction set to column. `nav-bar-content` and `nav-buttons` are dividers used for styling the website on smaller screens like mobiles. Setting `position: fixed` in the css for `nav-bar` makes sure that the navigation bar doesn't move when the user scrolls through the content in the larger right hand `text-contents` div.
 
 ```html
 <body>
@@ -133,11 +136,118 @@ I wanted to keep the layout of the website quite minimalist with an always there
 </body>
 ```
 
+`text-contents` is where the posts are shown or the static pages describing who I am, my research, and the codes I have worked on. The content is managed by `js/main.js` and loaded best on interactions with different buttons on the website using event listeners.
+
 ## Parsing posts
 
-little bit of python to help...
+In `main.js` there is a function called `reload()` which is triggered when the webpage first loads, when the site visitor clicks on `Home` or when the visitor filters the posts based on tags. `reload()` cleans any existing HTML in `text-contents` and if there is no tag provided to filter on creates a div with the welcome message in `includes/welcome.md` in, loads a series of buttons one for each tag in the `posts/tag-list.txt` and loads all the posts in `posts/post-list.txt`. 
+
+`parsePosts` in `js/utils.js` creates a card for each post in `post-list.txt` and renders them on the website in date order. When the post is clicked a class is added to the card called `open` which changes the `max-height` property of the card so that it displays the full post. The function scrapes the metadata from the posts file and filters based on tag. The div is given an element ID that includes a reference to the posts title. A share button is created and the posts content is appended to the card after being parsed with marked, KaTeX and highlightjs. The full function is shown below.
+
+```js
+export async function parsePost(postList, tag=null){
+    let textContents = document.getElementById("text-content")
+    postList.reverse()
+    for (let postName of postList){
+      let outputDiv = document.createElement("div");
+      outputDiv.setAttribute("class", "card");
+      outputDiv.addEventListener('click', () => {
+        outputDiv.classList.toggle('open');
+      });
+      let post = await loadMd(postName)
+      // first 4 lines are metadata
+      let metaInfoText = post.split('\n').slice(0, 4)
+      let metaInfo = {}
+      for (let meta of metaInfoText){
+          if (meta.split(':').length == 2){
+              metaInfo[meta.split(':')[0]] = meta.split(':')[1]
+          }
+      }
+      if (tag == null || metaInfo['tags'].includes(tag) || tag == 'All Posts'){
+        textContents.appendChild(outputDiv);
+        // everything after the first 5 lines is the post content
+        let postHTML = marked.parse(
+            post.split('\n').slice(5, post.length).join('\n'), 
+            {breaks: true})
+
+        let postHTMLList = postHTML.split('\n')
+        let title = postHTMLList.shift()
+        let elementId = 'post-' + 
+          title.split('<h1>')[1].split('</h1>')[0]
+          .toLowerCase().replace(/[^a-z0-9]+/g, '-')
+        outputDiv.setAttribute("id", elementId);
+
+        title = '<h1>' + title.slice(4, title.length)
+        title = '<div class="card-header">' + title + '\n</div>' + 
+          `<button id="shareBtn-${elementId}">Share this post</button>`
+        
+        postHTML = title + '<div class="card-body">\n'
+            + `<p>${metaInfo['date']}</p>`
+            + postHTMLList.join('\n') + 
+            '\n</div>'
+        document.getElementById(elementId).innerHTML = postHTML
+        renderMathInElement(document.getElementById(elementId), {
+            delimiters: [
+          {left: '$$', right: '$$', display: true},
+          {left: '$',  right: '$',  display: false}
+        ]
+        }); // KaTeX
+        // find all the code blocks inside pre blocks inside the post and highlight them
+        document.querySelectorAll(`#${elementId} pre code`).forEach((block) => {
+            hljs.highlightElement(block);
+        });
+
+        // make the share button functional
+        const shareBtn = document.getElementById('shareBtn-' + elementId);
+
+        shareBtn.addEventListener('click', async e => {
+          e.stopPropagation(); // prevent the card from toggling
+          if (navigator.share) {
+            await navigator.share({
+              title: document.title,
+              text: 'Check out this post!',
+              url: window.location.href + '#' + elementId,
+            });
+          };
+        });
+      }
+  }
+}
+```
 
 ## Sharing posts
+
+Since the posts are not on unique pages but rather expandable cards on the home page sharing them is a bit non-trivial. Ideally when a visitor comes to the site via a shared link we want the site to load with that post open and the screen scrolled to the beginning of the post. Links are created by clicking on the share button the site and use the browsers native sharing functionality. The links are created with a hash and the posts ID for example `https://harrybevins.co.uk/#post-global-21-cm-workshop-caltech`.
+
+<center><img src="posts/images/makingThisWebsite/native-share.png" width="50%" alt="A picture of the native share tool on the browser"></center>
+
+However loading the site at a post and opening that post requires an event listener on the window. The listener, shown below, check for a hash in the windows location and if it finds one it then looks for the card with that ID. If the card exists it sets its class to `card open` and scrolls it into view. However, because content is loaded dynamically into the window the card might not exist the first time `openCard` is called. We use a `MutationObserver` to look for changes in the `document.body` and run `openCard` every time there is a change until it returns `true`.
+
+```js
+// Handle URL hash to open specific post
+// scrolls to it when loaded and opens the card
+window.addEventListener('DOMContentLoaded', () => {
+  const hash = window.location.hash;
+  if (!hash) return;
+
+  const openCard = () => {
+    const card = document.querySelector(hash);
+    if (card) {
+      card.setAttribute('class', 'card open');
+      card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      return true;
+    }
+    return false;
+  };
+
+  if (!openCard()) {
+    const observer = new MutationObserver(() => {
+      if (openCard()) observer.disconnect();
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+  }
+});
+```
 
 ## Filtering based on tags
 
@@ -150,6 +260,18 @@ little bit of python to help...
 
 ## Hosting with Netlify
 
-I've never used Netlify before, but it was super easy to set up, and you can host your website for free. You can sign up with your GitHub account
+The website is being hosted on Netlify. It's not something I have used before, but it was super easy to set up, and you can host your website for free. You can sign up with your GitHub account and link a repository. Every time the deployed branch is updated the website is automatically redeployed, and I think you can also deploy multiple branches meaning I could in theory deploy my dev branch!
+
+My domain was purchased through Google domains originally, but this sold to Squarespace. I used this domain for my old github pages and never had any issues with Squarespace.
+
+I want to keep playing with Netlify and see what it has to offer, but it seems quite cool!
 
 ## Future edits
+
+One thing I would really like to add to the website is a way for people to subscribe and get updates every time a new post is added. Something like RSS might work here, but I need to explore options really!
+
+I'm also keen to explore frameworks like Reach.js and see if they can help improve the design and user experience.
+
+It would be fun to add a feature where users can change the highlight colour as well. I think this can be done with CSS variables, but I need to play with it a bit.
+
+If you have any feature suggestions or advice please get in touch or open an issue on the website's GitHub [repo](https://github.com/htjb/blog-website). Thanks for reading to the end of this very long post! There is a lot more I could have said about building this website, but I tried to highlight some of the interesting challenges that were faced and the decisions that had to be made. I enjoyed playing around with JavaScript, CSS and HTML, and I am continuing to play with them to build other projects!
