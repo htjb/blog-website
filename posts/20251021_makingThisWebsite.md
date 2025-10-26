@@ -249,20 +249,22 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 ```
 
-## Filtering based on tags
-
 ## Styling for mobile
 
+So after setting up the site to work on the desktop, I used Chromes' developer tools too see what it looked like on a smaller screen, and it wasn't great! On a mobile sized screen the navigation bar and text-content window were competing for space making the content on the right-hand side hard to read. I needed some specific rules for styling on smaller screens and I discovered you could do this with a `@media (max-width: 768px)` selector in CSS.
+
 <div style="display: flex; flex-direction: row; align-items: flex-start; justify-content:flex-start;">
-<p style="width: 70%; margin-right: 1em;">A sketch of the mobile layout is shown on the right</p>
+<p style="width: 70%; margin-right: 1em;">The idea was to take the nav bar and place it at the top of the webpage. I used `nav-bar-content` and `nav-buttons` divs to arrange the layout. `nav-bar`'s flex was changed to `row` so that the portrait image and content appeared next to eachother. `nav-bar-content`'s flex is in the `column` direction on the mobile and the buttons in their seperate div are flexed in the `row` direction to create the tidy layout you see on the right. </p>
 <img src="posts/images/makingThisWebsite/Mobile_website.png" width="30%" alt="A sketch of the mobile layout.">
 </div>
+
+The final change was to make the navigation bar's position relative so that it moved off-screen as the user scrolled. This prevents it taking up lots of space when visitors to the site on mobile devices are trying to read the posts.
 
 ## Hosting with Netlify
 
 The website is being hosted on Netlify. It's not something I have used before, but it was super easy to set up, and you can host your website for free. You can sign up with your GitHub account and link a repository. Every time the deployed branch is updated the website is automatically redeployed, and I think you can also deploy multiple branches meaning I could in theory deploy my dev branch!
 
-My domain was purchased through Google domains originally, but this sold to Squarespace. I used this domain for my old github pages and never had any issues with Squarespace.
+My domain was purchased through Google domains originally, but this sold to Squarespace. I used this domain for my old GitHub pages and never had any issues with Squarespace.
 
 I want to keep playing with Netlify and see what it has to offer, but it seems quite cool!
 
@@ -273,5 +275,7 @@ One thing I would really like to add to the website is a way for people to subsc
 I'm also keen to explore frameworks like Reach.js and see if they can help improve the design and user experience.
 
 It would be fun to add a feature where users can change the highlight colour as well. I think this can be done with CSS variables, but I need to play with it a bit.
+
+I'd also quite like to add a button to the website that takes users back to the top of the page. I think this would be particularly useful on mobile where the navigation bars position is fixed at the top of the site.
 
 If you have any feature suggestions or advice please get in touch or open an issue on the website's GitHub [repo](https://github.com/htjb/blog-website). Thanks for reading to the end of this very long post! There is a lot more I could have said about building this website, but I tried to highlight some of the interesting challenges that were faced and the decisions that had to be made. I enjoyed playing around with JavaScript, CSS and HTML, and I am continuing to play with them to build other projects!
