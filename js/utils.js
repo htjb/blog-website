@@ -43,7 +43,7 @@ export async function parsePost(postList, tag=null){
         title = '<h1>' + title.slice(4, title.length)
         title = '<div class="card-header">' + title + '\n</div>' + 
           `<button id="shareBtn-${elementId}">Share this post</button>`
-        console.log(metaInfo['date'])
+        
         postHTML = title + '<div class="card-body">\n'
             + `<p>${metaInfo['date']}</p>`
             + postHTMLList.join('\n') + 
