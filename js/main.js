@@ -99,6 +99,7 @@ window.addEventListener('DOMContentLoaded', () => {
 reload();
 
 async function loadPage(pageName) {
+  // load static page from includes/
   cleanPosts("text-content");
   loadMd('includes/' + pageName + '.md').then(page => {
     let pageHTML = marked.parse(page, {breaks: true});
