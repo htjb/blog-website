@@ -12,10 +12,14 @@ In this post I will discuss how we turn this data into something that is `readab
 
 ## Tokenisation and Vocab Building
 
+In order to build a language model we need a way to encode words or parts of words and punctuation into numerical values. This mapping has to be deterministic so that the network can learn patterns, and we can decode its predictions. We call this mapping a vocabulary, and we call the objects in our vocabulary tokens. 
+
+Tokens can be either full words or parts of words and punctuation. 
+
+Imagine we have a sentence along the lines of "The weather today is cloudy and rainy".
+
 ```python
-files = glob.glob(
-    "data/" + model_name + "/*.txt"
-)[:50000]
+files = glob.glob("data/" + model_name + "/*.txt")[:50000]
 
 text = []
 for f in files:
@@ -32,8 +36,13 @@ text = np.concatenate(text).tolist()
 
 ## Byte Pair Encoding
 
+In the Bag of Words model we treat each unique word in our corpus as a token however this limits the expressivity of our network to that specific set of words. If our network sees a word that it has not previously encountered there will be no mapping in our vocabulary for it and no way for it to understand its context. This approach is fine if we have a large enough and diverse enough corpus, but it is not ideal.
+
+An alternative approach is to tokenise our corpus using subwords.
+
 ## Other considerations
 
+size of the corpus used to build the vocab.
 Spaces and EOS and padding
 Unkown tokens
 
