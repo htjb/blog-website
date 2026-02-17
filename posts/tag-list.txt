@@ -1,5 +1,6 @@
 21cm
 conferences
+cosmology
 foregrounds
 javascript
 llms
