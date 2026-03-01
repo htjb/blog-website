@@ -4,10 +4,6 @@ You can checkout my codes on [github](https://github.com/htjb).
 
 ## Maintainer/Developer
 
-### SLiM: Small Language Model
-
-The idea behind SLiM was to build a small transformer based language model to better understand how they work. It's still under development, but you can take a look at the [code](https://github.com/htjb/small-language-model). The models are being built and developed using PyTorch and packaged with ONNX and there is a frontend similar to ChatGPTs using javascript, html and css (although none of my attempts to train a model that can return coherent text have so far succeeded!).
-
 ### globalemu: neural network emulation for 21-cm cosmology
 
 [globalemu](https://github.com/htjb/globalemu) is a simple feed-forward neural network emulator of the sky-averaged 21-cm signal. The emulator takes the novel approach of putting the independent variable, redshift or frequency, into the network alongside the physical parameters of the model and returning a single corresponding value of the sky-averaged 21-cm signal. Vectorized calls can them be used to evaluate the signal over a range of frequencies. The approach prevents the need for lossy PCA compressions of the data, allows the network to learn redshift dependence and was 100x faster and twice as accurate as the previous state of the art. It is written in TensorFlow and is now widely used for inference on sky-averaged 21-cm datasets. It is an integral part of the REACH data analysis pipeline and the novel approach was adapted for observations of the power spectrum by the HERA collaboration.

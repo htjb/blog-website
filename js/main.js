@@ -1,4 +1,4 @@
-import { parsePost, loadWelcome, cleanPosts, loadMd } from "./utils.js";
+import { parsePost, filterPosts, loadWelcome, cleanPosts, loadMd } from "./utils.js";
 
 // Prevent links inside cards from toggling the card open/close state
 function linkClickHandler() {
@@ -16,7 +16,7 @@ document.addEventListener('click', (e) => {
   const tagbtn = e.target.closest('.tag-button');
   const pagebtn = e.target.closest('.internal-link');
   if (tagbtn) {
-    reload(tagbtn.textContent.trim());
+    filterPosts(tagbtn.textContent.trim());
   } else if (pagebtn) {
     let pageName = pagebtn.innerHTML.trim().toLowerCase();
     if (pageName === 'home') {
@@ -51,20 +51,18 @@ async function loadTags() {
   textContents.appendChild(tagHolder);
 }
 
-async function loadPosts(filterTag = null) {
+async function loadPosts() {
   // load posts from post-list.txt
   const data = await fetch('posts/post-list.txt').then(r => r.text());
   const postList = data.split('\n').filter(Boolean);
-  parsePost(postList, filterTag);
+  parsePost(postList);
 }
 
-async function reload(filterTag = null) {
-  // clear existing content and reload based on tag unless null
-  // then load all posts
-  document.getElementById("text-content").innerHTML = "";  
+async function reload() {
+  document.getElementById("text-content").innerHTML = "";
   await loadWelcome();
   await loadTags();
-  await loadPosts(filterTag);
+  await loadPosts();
   linkClickHandler();
 }
 
