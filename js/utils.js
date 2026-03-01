@@ -49,20 +49,21 @@ export function filterPosts(tag) {
     match: !tag || tag === 'All Posts' || item.dataset.tags.includes(tag)
   }));
 
-  // Reorder instantly without triggering opacity transitions
+  // Frame 1: reorder and cut to invisible (no transition)
   items.forEach(({ el, match }) => {
     el.style.transition = 'none';
+    el.style.opacity = '0';
     el.style.order = match ? '0' : '1';
     el.style.pointerEvents = match ? '' : 'none';
   });
 
-  // Then fade opacity in the next frame once layout is settled
-  requestAnimationFrame(() => {
+  // Frame 2: restore transition and fade in to final opacities
+  requestAnimationFrame(() => requestAnimationFrame(() => {
     items.forEach(({ el, match }) => {
       el.style.transition = '';
       el.style.opacity = match ? '1' : '0.2';
     });
-  });
+  }));
 }
 
 export async function loadWelcome(){
