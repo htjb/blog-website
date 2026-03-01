@@ -43,32 +43,7 @@ body {
     margin: 10%;
 }
 
-.card {
-  border: 1px solid rgb(197, 71, 71);
-  border-radius: 8px;
-  overflow: hidden;
-  cursor: pointer;
-  transition: box-shadow 0.2s;
-  margin-top: 2%;
-}
 
-.card:hover { 
-    box-shadow: 0 2px 8px rgb(197, 71, 71); 
-}
-
-.card-header {
-  padding: 1%;
-}
-
-.card-body {
-  max-height: 100px;
-  overflow: hidden;
-  transition: max-height 0.3s ease;
-  padding: 0 1%;
-}
-.card.open .card-body {
-  max-height: 100%; /* large enough to fit content */
-}
 
 button {
   margin:1%;
@@ -86,6 +61,89 @@ button {
   min-width: 50%;
 }
 
+.tag-button {
+  display: inline-block;
+  background-color: rgba(197, 71, 71, 0.1);
+  color: rgb(197, 71, 71);
+  padding: 0.25rem 0.75rem;
+  border-radius: 15px;
+  margin-right: 0.5rem;
+  margin-bottom: 2.0rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border: none;
+}
+
+.tag-button:hover {
+  text-decoration: underline;
+}
+
 .katex-display { 
   overflow: auto hidden;
+}
+
+/* List view styles */
+.post-item {
+  margin-bottom: 1.5rem;
+}
+
+.post-title {
+  display: inline;
+}
+
+.post-title a {
+  color: rgb(197, 71, 71);
+  text-decoration: none;
+  font-size: 1.5rem;
+  margin-right: 1rem;
+}
+
+.post-title a:hover {
+  text-decoration: underline;
+}
+
+.post-date {
+  color: #666;
+  font-size: 1rem;
+  display: inline;
+}
+
+/* Individual post page styles */
+.post-page {
+  margin-top: 2rem;
+}
+
+.post-header h1 {
+  color: rgb(197, 71, 71);
+  margin-bottom: 0.5rem;
+}
+
+.post-date {
+  color: #666;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+
+.tag {
+  display: inline-block;
+  background-color: rgba(197, 71, 71, 0.1);
+  color: rgb(197, 71, 71);
+  padding: 0.25rem 0.75rem;
+  border-radius: 15px;
+  margin: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.back-link {
+  margin-top: 1rem;
+}
+
+.back-link a {
+  color: rgb(197, 71, 71);
+  text-decoration: none;
+  font-size: 1.2rem;
+}
+
+.back-link a:hover {
+  text-decoration: underline;
 }

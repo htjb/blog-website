@@ -32,18 +32,17 @@ async function loadTags() {
   // create tag buttons
   const data = await fetch('posts/tag-list.txt').then(r => r.text());
   const tagList = data.split('\n').filter(Boolean);
-  console.log(tagList);
   
   const tagHolder = document.createElement('div');
   tagHolder.id = 'tag-holder';
 
-  const allButton = document.createElement('button');
+  const allButton = document.createElement('span');
   allButton.className = 'tag-button';
   allButton.textContent = 'All Posts';
   tagHolder.appendChild(allButton);
   
   for (const tag of tagList) {
-    const b = document.createElement('button');
+    const b = document.createElement('span');
     b.className = 'tag-button';
     b.textContent = tag;
     tagHolder.appendChild(b);
@@ -60,40 +59,14 @@ async function loadPosts(filterTag = null) {
 }
 
 async function reload(filterTag = null) {
-  // clear existing posts and reload based on tag unless null
+  // clear existing content and reload based on tag unless null
   // then load all posts
-  cleanPosts("text-content");
-  if (filterTag == null) {
-    loadWelcome();
-    await loadTags();
-  }
+  document.getElementById("text-content").innerHTML = "";  
+  await loadWelcome();
+  await loadTags();
   await loadPosts(filterTag);
   linkClickHandler();
 }
-
-// Handle URL hash to open specific post
-// scrolls to it when loaded and opens the card
-window.addEventListener('DOMContentLoaded', () => {
-  const hash = window.location.hash;
-  if (!hash) return;
-
-  const openCard = () => {
-    const card = document.querySelector(hash);
-    if (card) {
-      card.setAttribute('class', 'card open');
-      card.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      return true;
-    }
-    return false;
-  };
-
-  if (!openCard()) {
-    const observer = new MutationObserver(() => {
-      if (openCard()) observer.disconnect();
-    });
-    observer.observe(document.body, { childList: true, subtree: true });
-  }
-});
 
 // initial load
 reload();

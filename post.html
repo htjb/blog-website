@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Harry Bevins - Post</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/mobile.css">
+    <link rel="icon" type="image/png" href="assets/rocket.png">
+    <script type="module" src="js/post.js" defer></script>
+
+    <!-- markdown parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    
+    <!-- math rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" defer></script>
+
+    <!-- code styling -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+</head>
+<body>
+    <div class="contents">
+        <div class="nav-bar">
+            <img src="assets/portrait.jpeg" alt="portrait" id="portrait">
+            <div class="nav-bar-content">
+                <h2>Harry Bevins PhD</h2>
+                <p>Astrophysics researcher at the Kavli Institute for Cosmology and Cavendish Astrophysics, University of Cambridge.</p>
+                <center>
+                <a href='https://arxiv.org/search/?searchtype=author&query=Bevins%2C+H+T+J'><img src="./assets/arxiv.png" width="10%" alt-text="arXiv Link" class="link-image"></a>
+                <a href='https://github.com/htjb'><img src="./assets/github_logo.png" width="10%" alt-text="Github Link" class="link-image"></a>
+                <a href='https://www.linkedin.com/in/harry-bevins/'><img src="./assets/linkedin.png" width="10%" alt-text="Linkedin Link" class="link-image"></a>
+                <a href='https://ui.adsabs.harvard.edu/search/q=author%3A%22Bevins%2C%20H.%20T.%20J.%22&sort=date%20desc%2C%20bibcode%20desc&p_=0'><img src="./assets/ads.png" width="10%" alt-text="ADS Link" class="link-image"></a>
+                </center>
+                <div class="nav-buttons">
+                <button class="internal-link" onclick="window.location.href='index.html'">Home</button>
+                <button class="internal-link" onclick="loadPage('about')">About</button>
+                <button class="internal-link" onclick="loadPage('research')">Research</button>
+                <button class="internal-link" onclick="loadPage('code')">Code</button>
+                </div>
+            </div>
+        </div>
+        <div id="text-content">
+        </div>
+    </div>
+</body>
+</html>
