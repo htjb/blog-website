@@ -4,7 +4,7 @@ date: 04/02/2026
 tags: 21cm, cosmology
 ---
 
-# The Dark Ages 21-cm signal and $\Lambda$ CDM
+# The Dark Ages 21-cm signal and ΛCDM
 
 The period between the formation of the Cosmic Microwave Background (CMB) around redshift $z \approx 1100$ and the first galaxies around $z \approx 30$ is largely unobserved. This "Dark Ages" epoch holds crucial information about the early universe, and one of the most promising ways to probe it is through the 21-cm signal from neutral hydrogen.
 
