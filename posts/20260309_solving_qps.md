@@ -47,6 +47,8 @@ There are a few different methods for solving quadratic programming problems. Tw
 
 ### Alternating Direction Method of Multipliers
 
+ADMM...
+
 ### Interior Point Method
 
 ## A comparison of solvers
