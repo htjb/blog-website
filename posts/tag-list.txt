@@ -6,3 +6,4 @@ javascript
 llms
 machine learning
 simulations
+statistics
