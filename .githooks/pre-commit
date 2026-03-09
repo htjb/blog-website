@@ -1,0 +1,9 @@
+#!/bin/bash
+# Regenerate the post and tag lists on commit.
+set -e
+
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+
+python3 "$REPO_ROOT/posts/build-post-list.py"
+git add "$REPO_ROOT/posts/post-list.txt"
+git add "$REPO_ROOT/posts/tag-list.txt"
