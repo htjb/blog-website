@@ -10,7 +10,10 @@ export async function cleanPosts(id) {
 export async function parsePost(postList){
     let textContents = document.getElementById("text-content")
     postList.reverse()
-    for (let postName of postList){
+    const posts = await Promise.all(postList.map(loadMd))
+    for (let i = 0; i < postList.length; i++){
+      const postName = postList[i]
+      const post = posts[i]
       let outputDiv = document.createElement("div");
       outputDiv.setAttribute("class", "post-item");
 
@@ -18,7 +21,6 @@ export async function parsePost(postList){
       const filename = postName.split('/').pop().replace('.md', '')
       const slug = filename.replace(/^\d+_/, '')
       const postId = `post-${slug}`
-      let post = await loadMd(postName)
       // first 4 lines are metadata
       let metaInfoText = post.split('\n').slice(0, 4)
       let metaInfo = {}
